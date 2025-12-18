@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Portal</title>
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 { color: #333; margin-bottom: 1.5rem; }
+        
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover { background-color: #0056b3; }
+
+        .error-msg {
+            color: red;
+            font-size: 14px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Utility Class to Hide Elements */
+        .hidden { display: none; }
+
+        /* Employee Card Styling */
+        .id-card {
+            border: 2px solid #007bff;
+            background-color: #e9f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .id-label { font-size: 0.9em; color: #555; }
+        .id-value { font-size: 1.5em; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div id="login-section" class="container">
+        <h2>Employee Login</h2>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username (try: admin)" required>
+            <input type="password" id="password" placeholder="Password (try: 1234)" required>
+            <button type="submit">Login</button>
+            <p id="error-message" class="error-msg">Invalid credentials</p>
+        </form>
+    </div>
+
+    <div id="dashboard-section" class="container hidden">
+        <h2>Welcome, <span id="display-name">User</span>!</h2>
+        <p>You have successfully logged into the system.</p> #just a trial
+
+        
+        <div class="id-card">
+            <div class="id-label">EMPLOYEE ID</div>
+            <div class="id-value" id="display-id">EMP-0000</div>
+        </div>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        
+        // 1. Define Mock Database
+        const mockUser = {
+            username: "admin",
+            password: "1234",
+            fullName: "Alex Johnson",
+            employeeId: "EMP-8842"
+        };
+
+        // 2. Handle Login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page refresh
+
+            const userInput = document.getElementById('username').value;
+            const passInput = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-message');
+
+            // Simple Validation
+            if (userInput === mockUser.username && passInput === mockUser.password) {
+                // Success: Switch Views
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                
+                // Populate Data
+                document.getElementById('display-name').textContent = mockUser.fullName;
+                document.getElementById('display-id').textContent = mockUser.employeeId;
+                
+                // Clear error if it was shown
+                errorMsg.style.display = 'none';
+            } else {
+                // Failure
+                errorMsg.style.display = 'block';
+            }
+        });
+
+        // 3. Handle Logout
+        function logout() {
+            // Reset Views
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            
+            // Clear Inputs
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementByID( 'error-message').style.display = 'none';
+            document.getelementbyid('username').focus();
+        }
+    </script>
+</body>
+</html>
